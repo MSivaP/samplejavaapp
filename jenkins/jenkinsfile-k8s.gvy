@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('checkout repo') {
+        stage('Source Code') {
 			steps {
 				git url: 'https://github.com/lerndevops/samplejavaapp.git'
             }
