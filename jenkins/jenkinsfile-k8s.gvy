@@ -6,7 +6,7 @@ pipeline {
 				git url: 'https://github.com/lerndevops/samplejavaapp.git'
             }
         }
-        stage('build artifact') {
+        stage('Build') {
 			steps {
 				sh '/opt/maven/bin/mvn clean package'
             }
