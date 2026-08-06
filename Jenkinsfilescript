@@ -1,0 +1,38 @@
+pipeline
+{
+    agent any
+    tools
+    {
+        maven "maven-3.9.16"
+    }
+    triggers
+    {
+        cron '* * * * *'
+    }
+    stages
+    {
+        stage('gitsource code')
+        {
+            steps
+            {
+                git credentialsId: '66fbca19-14f0-4e78-9e2c-394d17762f5f', url: 'https://github.com/MSivaP/samplejavaapp.git'
+            }
+        }
+        stage('Build-stage')
+        {
+            steps
+            {
+                sh "mvn clean package "
+            }
+        }
+        stage('Deploy-war-tomcat')
+        {
+            steps
+            {
+                sshagent(['f355d8f9-c636-42a1-af0d-2420456c052a']) {
+  sh "scp -o StrictHostKeyChecking=no target/sampleapp.war ec2-user@98.92.160.46:/opt/tomcat/webapps"
+}
+            }
+        }
+    }
+}
